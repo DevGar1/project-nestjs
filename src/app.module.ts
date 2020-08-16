@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -19,7 +20,8 @@ import { ConfigModule } from '@nestjs/config';
         timezone: 'UTC'
       }),
       // TypeOrmModule.forRoot(typeOrmConfig), de esta manera tambien funciona pero la documentación dice que mejor con el env
-      TasksModule
+      TasksModule,
+      AuthModule
     ],
 })
 export class AppModule {
