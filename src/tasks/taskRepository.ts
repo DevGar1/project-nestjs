@@ -3,6 +3,7 @@ import { TaskMapping } from './task.mapping';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task-status.enum';
 import { GetTaskFilterDto } from './dto/get-task-filter.Dto';
+import {User} from "../auth/user.mapping";
 
 @EntityRepository(TaskMapping)
 export class TaskRepository extends Repository<TaskMapping> {
@@ -22,12 +23,13 @@ export class TaskRepository extends Repository<TaskMapping> {
     return await query.getMany();
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<TaskMapping> {
+  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<TaskMapping> {
     const { description, title } = createTaskDto;
     const task = new TaskMapping();
     task.description = description;
     task.title = title;
     task.status = TaskStatus.OPEN;
+    task.user = user;
     await task.save();
     return task;
   }

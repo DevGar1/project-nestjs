@@ -1,17 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { TaskRepository } from './taskRepository';
-import { InjectRepository } from '@nestjs/typeorm';
-import { TaskMapping } from './task.mapping';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { TaskStatus } from './task-status.enum';
-import { GetTaskFilterDto } from './dto/get-task-filter.Dto';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {TaskRepository} from './taskRepository';
+import {InjectRepository} from '@nestjs/typeorm';
+import {TaskMapping} from './task.mapping';
+import {CreateTaskDto} from './dto/create-task.dto';
+import {TaskStatus} from './task-status.enum';
+import {GetTaskFilterDto} from './dto/get-task-filter.Dto';
+import {User} from "../auth/user.mapping";
 
 
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(TaskRepository)
-    private taskRepository: TaskRepository,
+      @InjectRepository(TaskRepository)
+      private taskRepository: TaskRepository,
   ) {
   }
 
@@ -27,8 +28,9 @@ export class TasksService {
     return found;
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<TaskMapping> {
-    return await this.taskRepository.createTask(createTaskDto);
+  async createTask(createTaskDto: CreateTaskDto, user: User,
+  ): Promise<TaskMapping> {
+    return await this.taskRepository.createTask(createTaskDto, user);
   }
 
   async deleteTask(id: number): Promise<void> {
