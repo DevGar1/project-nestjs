@@ -1,8 +1,8 @@
 import { BaseEntity, Entity } from 'typeorm';
-import {Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm/index';
+import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm/index';
 import { TaskStatus } from './task-status.enum';
 import { IsInt } from 'class-validator';
-import {User} from "../auth/user.mapping";
+import { User } from '../auth/user.mapping';
 
 
 @Entity('task')
@@ -22,8 +22,11 @@ export class TaskMapping extends BaseEntity {
 
 
   @ManyToOne(() => User, user => user.task, {
-    eager: false
+    eager: false,
   })
   user: User;
+
+  @Column()
+  userId: number;
 }
 

@@ -4,23 +4,29 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task-status.enum';
 import { GetTaskFilterDto } from './dto/get-task-filter.Dto';
 import {User} from "../auth/user.mapping";
+import { InternalServerErrorException, Logger } from '@nestjs/common';
 
 @EntityRepository(TaskMapping)
 export class TaskRepository extends Repository<TaskMapping> {
-
-  async getTaskFilter(filterDto: GetTaskFilterDto): Promise<TaskMapping[]> {
+  private logger = new Logger('TaskRepository');
+  async getTaskFilter(filterDto: GetTaskFilterDto,
+                      user: User
+                      ): Promise<TaskMapping[]> {
     const { status, search } = filterDto;
-    console.log(search);
     const query = this.createQueryBuilder('task');
+    query.andWhere('task.userId = :userId', {userId: user.id});
     if (status) {
-      console.log(status);
       query.andWhere('task.status = :status', { status });
     }
     if (search) {
-      console.log(search);
       query.andWhere('(task.title LIKE :search OR task.description LIKE :search)', { search: `%${search}%` });
     }
-    return await query.getMany();
+    try {
+      return await query.getMany();
+    } catch (error) {
+      this.logger.error(`failed to get task fr user "${user.username}", DTO: ${JSON.stringify(filterDto)}`, error.stack);
+      throw new InternalServerErrorException();
+    }
   }
 
   async createTask(createTaskDto: CreateTaskDto, user: User): Promise<TaskMapping> {

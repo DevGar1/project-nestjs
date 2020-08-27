@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class UserRepository extends Repository<User> {
   async singUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     const { userName, password } = authCredentialsDto;
-    const user = new User();
+    const user = this.create();
     user.salt = await bcrypt.genSalt();
     user.username = userName;
     user.password = await UserRepository.hashPassword(password, user.salt);
