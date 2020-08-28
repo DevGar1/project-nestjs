@@ -8,9 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-      //Esto se hace con el env, ignora el archivo confi
-      ConfigModule.forRoot({ isGlobal: true }),
-
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(typeOrmConfig),
     TasksModule,
     AuthModule,
