@@ -75,6 +75,4 @@ export class TasksController {
   ): Promise<TaskMapping> {
     return await this.taskService.updateStatus(id, status, user);
   }
-
-
 }

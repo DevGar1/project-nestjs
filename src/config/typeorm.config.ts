@@ -7,7 +7,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: 'root',
   password: 'losangeles17',
   database: 'tasks',
-  entities: [__dirname + '/**/*.mapping{.ts,.js}'],
+  entities: [__dirname + '/../**/*.mapping{.ts,.js}'],
   synchronize: false,
   timezone: 'UTC',
 };
