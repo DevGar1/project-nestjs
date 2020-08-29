@@ -3,7 +3,7 @@ server:
 
 db:
   type: 'mysql'
-  port: 5343
+  port: 3306
   database: 'tasks'
 
 jwt:
