@@ -1,21 +1,24 @@
-import {Module} from '@nestjs/common';
-import {AuthController} from './auth.controller';
-import {AuthService} from './auth.service';
-import {TypeOrmModule} from '@nestjs/typeorm';
-import {UserRepository} from './user.repository';
-import {JwtModule} from '@nestjs/jwt';
-import {PassportModule} from '@nestjs/passport';
-import {JwtStrategy} from './jwt.strategy';
+import { Module } from '@nestjs/common';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserRepository } from './user.repository';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './jwt.strategy';
+import * as config from 'config';
+
+const dbConfig = config.get('jwt');
 
 @Module({
   imports: [
-    PassportModule.register({defaultStrategy: 'jwt'}),
-      JwtModule.register({
-        secret: 'EsmiSecreto17',
-        signOptions: {
-          expiresIn: 3600,
-        },
-      }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: dbConfig.secret,
+      signOptions: {
+        expiresIn: dbConfig.expiresIn,
+      },
+    }),
     TypeOrmModule.forFeature([UserRepository]),
 
   ],

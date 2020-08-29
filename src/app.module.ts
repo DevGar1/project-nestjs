@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot(typeOrmConfig),
     TasksModule,
     AuthModule,
+    ConfigModule
   ],
 })
 export class AppModule {

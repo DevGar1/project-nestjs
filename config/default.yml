@@ -5,6 +5,10 @@ db:
   type: 'mysql'
   port: 3306
   database: 'tasks'
+  host: 'localhost'
+  username: 'root'
+  password: 'losangeles17'
+  synchronize: false
 
 jwt:
   expiresIn: 3600
