@@ -32,14 +32,13 @@ export class TasksService {
     return found;
   }
 
-  async createTask(createTaskDto: CreateTaskDto, user: User,
-  ): Promise<TaskMapping> {
+  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<TaskMapping> {
     return await this.taskRepository.createTask(createTaskDto, user);
   }
 
   async deleteTask(id: number, user: User): Promise<void> {
     const found = await this.getTaskById(id, user);
-    found.remove();
+    await found.remove();
   }
 
   async getAllTask(): Promise<TaskMapping[]> {

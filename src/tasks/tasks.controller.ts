@@ -67,6 +67,7 @@ export class TasksController {
                    @GetUser() user: User): Promise<void> {
     await this.taskService.deleteTask(id, user);
   }
+
   @Put('update/status/:id')
   async updateStatus(
     @Param('id', ParseIntPipe) id: number,

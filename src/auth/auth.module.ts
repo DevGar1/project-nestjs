@@ -14,7 +14,7 @@ const dbConfig = config.get('jwt');
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: dbConfig.secret,
+      secret: process.env.SECRETKEY || dbConfig.secret,
       signOptions: {
         expiresIn: dbConfig.expiresIn,
       },
